@@ -1,0 +1,37 @@
+{% extends 'layouts/base.html' %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-12">
+            Serviços
+            <a href="{% url 'criar_usuario' %}">Novo Funcionário</a>
+        </div>
+        <div class="col-12">
+            {% include 'includes/messages.html' %}
+        </div>
+        <div class="col-12">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usuario in usuarios %}
+                        <tr>
+                            <td>{{usuario.id}}</td>
+                            <td>{{usuario.nome}}</td>
+                            <td>
+                                <a href="{% url 'editar_usuario' usuario.id %}">Editar</a>
+                                <a href="{% url 'deletar_usuario' usuario.id %}">Deletar</a>
+                                <a href="{% url 'editar_senha' usuario.id %}">Alterar Senha</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock main %}
+    

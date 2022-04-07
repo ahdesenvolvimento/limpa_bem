@@ -1,0 +1,36 @@
+{% extends 'layouts/base.html' %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-12">
+            Clientes
+            <a href="{% url 'criar_atendimentos' %}">Novo atendimento</a>
+        </div>
+        <div class="col-12">
+            {% include 'includes/messages.html' %}
+        </div>
+        <div class="col-12">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for atendimento in atendimentos %}
+                        <tr>
+                            <td>{{atendimento.id}}</td>
+                            <td>{{atendimento.nome}}</td>
+                            <td>
+                                <a href="{% url 'editar_atendimento' atendimento.id %}">Editar</a>
+                                <a href="{% url 'deletar_atendimento' atendimento.id %}">Deletar</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock main %}
+    

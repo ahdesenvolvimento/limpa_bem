@@ -1,0 +1,85 @@
+{% extends 'layouts/base.html' %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-12">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-floating mb-3">
+                                <input type="text" name="valor_pago" id="valor_pago" maxlength="255" class="form-control" placeholder="Valor pago" value="{{usuario.valor_pago}}">
+                                <label for="valor_pago">Valor pago</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-floating mb-3">
+                                <input type="date" name="data_limpeza" id="data_limpeza" maxlength="255" class="form-control" placeholder="Data limpeza" value="{{usuario.data_limpeza}}">
+                                <label for="data_limpeza">Data da limpeza</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-floating mb-3">
+                                <select name="id_funcionario" id="id_funcionario" class="form-control">
+                                    <option value="">Selecione o atendente</option>
+                                    {% for funcionario in atendentes %}
+                                        <option value="{{funcionario.id}}">{{funcionario.nome}}</option>
+                                    {% endfor %}
+                                </select>
+                                <label for="id_funcionario">Atendente</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-floating mb-3">
+                                <select name="id_servico" id="id_servico" class="form-control">
+                                    <option value="">Selecione o serviço</option>
+                                    {% for servico in servicos %}
+                                        <option value="{{servico.id}}">{{servico.nome}} / R$ {{servico.valor}}</option>
+                                    {% endfor %}
+                                </select>
+                                <label for="id_servico">Serviço</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-floating mb-3">
+                                <select name="id_cliente" id="id_cliente" class="form-control">
+                                    <option value="">Selecione o cliente</option>
+                                    {% for cliente in clientes %}
+                                        <option value="{{cliente.id}}">{{cliente.nome}}</option>
+                                    {% endfor %}
+                                </select>
+                                <label for="id_cliente">Cliente</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-floating mb-3">
+                                <select name="situacao" id="situacao" class="form-control">
+                                    <option value="">Selecione a situação</option>
+                                    <option value="1">Pendente</option>
+                                    <option value="2">Realizado</option>
+                                    <option value="3">Cancelado</option>
+                                </select>
+                                <label for="situacao">Situação</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock main %}
+    

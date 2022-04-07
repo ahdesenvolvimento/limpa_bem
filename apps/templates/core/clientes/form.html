@@ -1,0 +1,98 @@
+{% extends 'layouts/base.html' %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-12">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-floating mb-3">
+                                <input type="text" name="nome" id="nome" maxlength="255" class="form-control" placeholder="Nome" value="{{usuario.nome}}">
+                                <label for="nome">Nome do serviço</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-floating mb-3">
+                                <input type="text" name="logradouro" id="logradouro" maxlength="255" class="form-control" placeholder="Logradouro" value="{{usuario.logradouro}}">
+                                <label for="logradouro">Endereço</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-floating mb-3">
+                                <input type="text" name="numero" id="numero" maxlength="255" class="form-control" placeholder="Numero" value="{{usuario.numero}}">
+                                <label for="numero">Numero</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-floating mb-3">
+                                <input type="text" name="cep" id="cep" maxlength="255" class="form-control" placeholder="CEP" value="{{usuario.cep}}">
+                                <label for="cep">CEP</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-floating mb-3">
+                                <input type="text" name="localidade" id="localidade" maxlength="255" class="form-control" placeholder="Localidade" value="{{usuario.localidade}}">
+                                <label for="localidade">Localidade</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-floating mb-3">
+                                <input type="text" name="bairro" id="bairro" maxlength="255" class="form-control" placeholder="Bairro" value="{{usuario.bairro}}">
+                                <label for="bairro">Bairro</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-floating mb-3">
+                                <input type="text" name="complemento" id="complemento" maxlength="255" class="form-control" placeholder="Complemento" value="{{usuario.complemento}}">
+                                <label for="complemento">Complemento</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-floating mb-3">
+                                <input type="text" name="telefone" id="telefone" maxlength="255" class="form-control" placeholder="Telefone" value="{{usuario.telefone}}">
+                                <label for="telefone">Telefone</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-floating mb-3">
+                                <input type="text" name="cpf" id="cpf" maxlength="255" class="form-control" placeholder="CPF" value="{{usuario.cpf}}">
+                                <label for="cpf">CPF</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-floating mb-3">
+                                <input type="email" name="email" id="email" maxlength="255" class="form-control" placeholder="E-mail" value="{{usuario.email}}">
+                                <label for="email">E-mail</label>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock main %}
+    

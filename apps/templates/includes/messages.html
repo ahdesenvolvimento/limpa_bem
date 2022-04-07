@@ -1,0 +1,53 @@
+{% if messages %}
+{% for message in messages %}
+<div class="row">
+    <div class="col-12">
+        
+        {% if message.tags == 'success' %}
+            <div class="alert alert-success bg-success bg-gradient alert-dismissible fade show mt-3" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+        {% elif message.tags == 'error' %}
+            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+
+        {% elif message.tags == 'info' %}
+            <div class="alert alert-info bg-info bg-gradient alert-dismissible fade show mt-3" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                {{ error|escape }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+        {{ error|escape }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true"></span>
+        </button>
+    </div>
+    {% endfor %}
+{% endif %}
