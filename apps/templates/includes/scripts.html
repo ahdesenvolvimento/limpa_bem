@@ -8,6 +8,7 @@
     $(function() {
         $("#main-container").css('height', "calc(100vh - "+($('.page-footer').height()+$("#header").height() + 25)+"px)");
         $('input[name=valor]').maskMoney();
+        $('input[name=valor_pago]').maskMoney();
     })
 </script>
 {% endblock javascript %}

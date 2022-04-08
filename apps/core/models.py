@@ -53,20 +53,21 @@ class Atendimento(Base):
     id_funcionario = models.ForeignKey(Atendente, on_delete=models.CASCADE, null=False, blank=False)
     id_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, null=False, blank=False)
     valor_pago = models.CharField('Valor pago pelo cliente', max_length=255, null=False, blank=False)
+    desconto = models.BooleanField('Desconto', default=False)
     data_limpeza = models.DateField('Data da limpeza', null=False, blank=False)
     situacao = models.CharField('Situação do atendimento', max_length=255, choices=OPCOES_ATENDIMENTO)
 
     class Meta:
         db_table = 'atendimento'
 
-class AtendimentoServico(Base):
-    id_atendimento = models.ForeignKey(Atendimento, on_delete=models.CASCADE)
-    id_servico = models.ForeignKey(Servico, on_delete=models.CASCADE)
-    class Meta:
-        db_table = 'atendimento_servico'
+# class AtendimentoServico(Base):
+#     id_atendimento = models.ForeignKey(Atendimento, on_delete=models.CASCADE)
+#     id_servico = models.ForeignKey(Servico, on_delete=models.CASCADE)
+#     class Meta:
+#         db_table = 'atendimento_servico'
 
-class AtendimentoServicoEndereco(Base):
-    id_endereco = models.ForeignKey(Endereco, on_delete=models.CASCADE)
-    id_atendimento = models.ForeignKey(AtendimentoServico, on_delete=models.CASCADE)
-    class Meta:
-        db_table = 'atendimento_servico_endereco'
+# class AtendimentoServicoEndereco(Base):
+#     id_endereco = models.ForeignKey(Endereco, on_delete=models.CASCADE)
+#     id_atendimento = models.ForeignKey(AtendimentoServico, on_delete=models.CASCADE)
+#     class Meta:
+#         db_table = 'atendimento_servico_endereco'

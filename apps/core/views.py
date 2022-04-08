@@ -146,20 +146,23 @@ def index_atendimentos(request):
 @login_required(login_url='login')
 def editar_atendimento(request, pk):
     try:
-        cliente = Cliente.objects.get(id=pk)
+        atendimento = Atendimento.objects.get(id=pk)
         if request.method == 'POST':
-            form = ClienteForm(request.POST or None, instance=cliente)
+            form = AtendimentoForm(request.POST or None, instance=atendimento)
             if form.is_valid():
                 form.save()
-                messages.success(request, 'Serviço editado com sucesso.')
-                return redirect('index_cliente')
+                messages.success(request, 'Atendimento editado com sucesso.')
+                return redirect('index_atendimentos')
         context = {
-            'cliente':cliente
+            'atendimento':atendimento,
+            'atendentes':Atendente.objects.all(),
+            'servicos':Servico.objects.filter(status=True),
+            'clientes':Cliente.objects.all()
         }
-        return render(request, 'core/clientes/form.html', context)
+        return render(request, 'core/atendimentos/form.html', context)
     except Servico.DoesNotExist:
-        messages.error(request, 'Cliente não cadastrado.')
-        return redirect('index_cliente')
+        messages.error(request, 'Atendimento não cadastrado.')
+        return redirect('index_atendimentos')
 
 
 @login_required(login_url='login')

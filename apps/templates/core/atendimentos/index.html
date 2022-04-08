@@ -3,34 +3,67 @@
 {% block main %}
     <div class="row">
         <div class="col-12">
-            Clientes
-            <a href="{% url 'criar_atendimentos' %}">Novo atendimento</a>
-        </div>
-        <div class="col-12">
             {% include 'includes/messages.html' %}
         </div>
+        <div class="col-12 d-flex justify-content-between">
+            <h5>Atendimentos</h5>
+            <a class="btn btn-primary" title="Novo serviço" href="{% url 'criar_atendimentos' %}"><i class="cil-plus icon-align"></i> Novo Atendimento</a>
+        </div>
+        <div class="col-12 mb-3">
+            <div class="dropdown-divider"></div>
+        </div>
         <div class="col-12">
-            <table class="table table-hover">
+            <table class="table table-hover table-bordered text-center">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nome</th>
+                        <th>Data da limpeza</th>
+                        <th>Valor R$</th>
+                        <th>Situação</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for atendimento in atendimentos %}
                         <tr>
                             <td>{{atendimento.id}}</td>
-                            <td>{{atendimento.nome}}</td>
+                            <td>{{atendimento.data_limpeza}}</td>
+                            <td>{{atendimento.valor_pago}}</td>
                             <td>
-                                <a href="{% url 'editar_atendimento' atendimento.id %}">Editar</a>
-                                <a href="{% url 'deletar_atendimento' atendimento.id %}">Deletar</a>
+                                {{atendimento.situacao}}
+                            </td>
+                            <td >
+                                <a class="btn btn-primary" title="Editar atendimento" href="{% url 'editar_atendimento' atendimento.id %}"><i class="cil-pen icon-align">Editar</i></a>
+                                {% if request.user.is_superuser %}
+                                    <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalDelete{{atendimento.id}}" title="Deletar atendimento" href="{% url 'deletar_atendimento' atendimento.id %}"><i class="cil-trash icon-align">Deletar</i></button>
+                                {% endif %}
                             </td>
                         </tr>
+                        <div class="modal fade text-white fw-bold" id="modalDelete{{atendimento.id}}" aria-hidden="true" aria-labelledby="modalDelete" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content bg-danger bg-gradient">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="modalDelete">ATENÇÃO!</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  <p>Deseja realmente deletar o atendimento?</p>
+                                  <p>Ao prosseguir você não terá como refazer a ação.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-light" title="Deletar serviço" href="{% url 'deletar_atendimento' atendimento.id %}">Deletar</a>
+                                    <button class="btn btn-light" type="button" data-bs-dismiss="modal" title="Cancelar">Cancelar</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
+    
+    {% include 'includes/scripts.html' %}
 {% endblock main %}
+    
     
