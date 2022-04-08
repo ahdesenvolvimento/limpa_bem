@@ -3,18 +3,24 @@
 {% block main %}
     <div class="row">
         <div class="col-12">
-            Clientes
-            <a href="{% url 'criar_clientes' %}">Novo Cliente</a>
-        </div>
-        <div class="col-12">
             {% include 'includes/messages.html' %}
         </div>
+        <div class="col-12 d-flex justify-content-between">
+            <h5>Serviços</h5>
+            <a class="btn btn-primary" title="Novo serviço" href="{% url 'criar_clientes' %}"><i class="cil-plus icon-align"></i> Novo cliente</a>
+        </div>
+        <div class="col-12 mb-3">
+            <div class="dropdown-divider"></div>
+        </div>
         <div class="col-12">
-            <table class="table table-hover">
+            <table class="table table-hover table-bordered text-center">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>CPF</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,15 +28,38 @@
                         <tr>
                             <td>{{cliente.id}}</td>
                             <td>{{cliente.nome}}</td>
-                            <td>
-                                <a href="{% url 'editar_cliente' cliente.id %}">Editar</a>
-                                <a href="{% url 'deletar_cliente' cliente.id %}">Deletar</a>
+                            <td>{{cliente.telefone}}</td>
+                            <td>{{cliente.cpf}}</td>
+                            <td >
+                                <a class="btn btn-primary" title="Editar serviço" href="{% url 'editar_cliente' cliente.id %}"><i class="cil-pen icon-align">Editar</i></a>
+                                <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalDelete{{cliente.id}}" title="Deletar serviço" href="{% url 'deletar_cliente' cliente.id %}"><i class="cil-trash icon-align">Deletar</i></button>
                             </td>
                         </tr>
+                        <div class="modal fade text-white fw-bold" id="modalDelete{{cliente.id}}" aria-hidden="true" aria-labelledby="modalDelete" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content bg-danger bg-gradient">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="modalDelete">ATENÇÃO!</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  <p>Deseja realmente deletar o cliente??</p>
+                                  <p>Ao prosseguir você não terá como refazer a ação.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-light" title="Deletar serviço" href="{% url 'deletar_cliente' cliente.id %}">Deletar</a>
+                                    <button class="btn btn-light" type="button" data-bs-dismiss="modal" title="Cancelar">Cancelar</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
+    
+    {% include 'includes/scripts.html' %}
 {% endblock main %}
+    
     

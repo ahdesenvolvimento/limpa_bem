@@ -25,18 +25,19 @@ class Servico(Base):
 
 class Endereco(Base):
     logradouro = models.CharField(max_length=255)
-    numero = models.IntegerField()
+    numero = models.IntegerField(null=True, blank=True)
     cep = models.CharField(max_length=11)
     localidade = models.CharField(max_length=255)
     bairro = models.CharField(max_length=255)
-    complemento = models.CharField(max_length=255)
+    complemento = models.CharField(max_length=255, null=True, blank=True)
+    uf = models.CharField(max_length=255, null=True, blank=False)
     class Meta:
         db_table = 'endereco'
 
 class Cliente(Endereco):
     nome = models.CharField('Nome do cliente', max_length=255, null=False, blank=False)
     telefone = models.CharField('Telefone', max_length=20, null=False, blank=False)
-    
+    email = models.EmailField('E-mail', max_length=255, null=True)
     cpf = models.CharField('CPF', max_length=14, null=False, blank=False, unique=True)
 
     class Meta:

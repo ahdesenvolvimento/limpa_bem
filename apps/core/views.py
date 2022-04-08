@@ -99,14 +99,14 @@ def editar_cliente(request, pk):
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Serviço editado com sucesso.')
-                return redirect('index_cliente')
+                return redirect('index_clientes')
         context = {
             'cliente':cliente
         }
         return render(request, 'core/clientes/form.html', context)
     except Servico.DoesNotExist:
         messages.error(request, 'Cliente não cadastrado.')
-        return redirect('index_cliente')
+        return redirect('index_clientes')
 
 
 @login_required(login_url='login')
@@ -116,7 +116,7 @@ def deletar_cliente(request, pk):
         cliente.delete()
     except Cliente.DoesNotExist:
         messages.error(request, 'Cliente não cadastrado.')
-    return redirect('index_cliente')
+    return redirect('index_clientes')
 
 
 @login_required(login_url='login')

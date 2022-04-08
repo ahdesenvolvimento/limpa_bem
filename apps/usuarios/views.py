@@ -1,10 +1,11 @@
+from pyclbr import Function
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Permission, Group
 from django.contrib import messages
 
 from apps.usuarios.forms import CadastroFuncionarioForm, CadastroGerenteForm
-from apps.usuarios.models import Usuario
+from apps.usuarios.models import Gerente, Usuario
 
 # Create your views here.
 @login_required(login_url='login')
@@ -47,6 +48,7 @@ def editar_usuario(request, pk):
         return redirect('index')
     try:
         usuario = Usuario.objects.get(id=pk)
+        # usuario = Gerente.objects.get(id=pk) if usuario.is_superuser else Aten.objects.get(id=pk)
         if str(request.method == 'POST'): 
             form = AtualizaCadastro(request.POST or None, instance=usuario)
             if form.is_valid():
@@ -59,7 +61,7 @@ def editar_usuario(request, pk):
             'form':form,
             'edit':True,
             'groups':Group.objects.all(),
-            'group_user':usuario.groups.all().first()
+            'group_user':usuario.groups.all().first(),
         }
         return render(request, 'accounts/user/form_user.html', context)
     except Usuario.DoesNotExist:
