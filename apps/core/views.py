@@ -66,6 +66,7 @@ def deletar_servico(request, pk):
             return redirect('index')
         servico = Servico.objects.get(id=pk)
         servico.delete()
+        messages.success(request, 'Serviço deletado com sucesso.')
     except Servico.DoesNotExist:
         messages.error(request, 'Serviço não cadastrado.')
     return redirect('index_servicos')

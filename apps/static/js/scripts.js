@@ -1,3 +1,4 @@
-window.onload = function (){
-    // alert('ops');
+function voltar(){
+    event.preventDefault();
+    window.history.back();
 }
