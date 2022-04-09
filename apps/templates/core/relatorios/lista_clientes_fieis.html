@@ -4,9 +4,46 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatório - Lista de clientes fiéis</title>
+    <title>Relatório - Clientes que mais fiéis no mês</title>
+    <style>
+        table {
+          border-collapse: collapse;
+          color: #333;
+          margin: auto;
+        }
+        tr th {
+            border: 1px solid #000;
+        }
+      
+        tr:nth-child(even) {
+          background-color: #f1f1f1 !important;
+        }
+      
+        tr:first-child {
+          background: white;
+        }
+      
+        td, th {
+          border: 1px solid #000;
+          padding: 0.5em;
+        }
+      
+        th {
+          border: none;
+          text-align: center;
+        }
+        .text-center{
+            text-align: center;
+        }
+        .text-right{
+            text-align: right;
+        }
+      </style>
 </head>
 <body>
+    <div class="text-center">
+        <h4>Clientes mais fiéis no mês {{data_relatorio.month}}</h4>
+    </div>
     <table>
         <thead>
             <tr>
@@ -14,7 +51,6 @@
                 <th>Nome</th>
                 <th>Quantidade</th>
             </tr>
-        </thead>
         <tbody>
             
             {% for atendimento in atendimentos %}
@@ -26,5 +62,8 @@
             {% endfor %}
         </tbody>
     </table>
+    <div class="text-right">
+        <h4>Relatório gerado na data {{data_relatorio}}</h4>
+    </div>
 </body>
 </html>

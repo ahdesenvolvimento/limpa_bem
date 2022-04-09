@@ -4,9 +4,46 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatório - Lista de atendimentos no mês</title>
+    <title>Relatório - Lista de atendimentos no dia</title>
+    <style>
+        table {
+          border-collapse: collapse;
+          color: #333;
+          margin: auto;
+        }
+        tr th {
+            border: 1px solid #000;
+        }
+      
+        tr:nth-child(even) {
+          background-color: #f1f1f1 !important;
+        }
+      
+        tr:first-child {
+          background: white;
+        }
+      
+        td, th {
+          border: 1px solid #000;
+          padding: 0.5em;
+        }
+      
+        th {
+          border: none;
+          text-align: center;
+        }
+        .text-center{
+            text-align: center;
+        }
+        .text-right{
+            text-align: right;
+        }
+      </style>
 </head>
 <body>
+    <div class="text-center">
+        <h4>Quantidade de atendimento do mês {{data_relatorio.month}}</h4>
+    </div>
     <table>
         <thead>
             <tr>
@@ -14,9 +51,9 @@
                 <th>Cliente</th>
                 <th>Atendente</th>
                 <th>Serviço</th>
+                <th>Data do atendimento</th>
                 <th>Valor pago</th>
             </tr>
-        </thead>
         <tbody>
             
             {% for atendimento in atendimentos %}
@@ -25,11 +62,20 @@
                     <td>{{atendimento.id_cliente.nome}}</td>
                     <td>{{atendimento.id_funcionario.nome}}</td>
                     <td>{{atendimento.id_servico.nome}}</td>
-                    <td>{{atendimento.valor_pago}}</td>
+                    <td>{{atendimento.criado|date:'d/m/Y'}}</td>
+                    <td>R$ {{atendimento.valor_pago}}</td>
                 </tr>
             {% endfor %}
-                
         </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="5">Total R$</th>
+                <td><strong>R$ {{total}}</strong></td>
+            </tr>
+        </tfoot>
     </table>
+    <div class="text-right">
+        <h4>Relatório gerado na data {{data_relatorio}}</h4>
+    </div>
 </body>
 </html>

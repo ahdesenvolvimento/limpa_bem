@@ -10,12 +10,6 @@ from apps.usuarios.models import Gerente, Pessoa, Usuario
 # Create your views here.
 @login_required(login_url='login')
 def criar_usuario(request):
-    # if request.user.check_permission('accounts.add_usuario'):
-    #     messages.info(request, 'Você não tem permissão!')
-    #     return redirect('index')
-    # if not Group.objects.filter().first():
-    #     messages.info(request, 'Não existe cargos cadastrados no sistema.')
-    #     return redirect('listar_usuarios')
     if str(request.method == 'POST'):
         tipo_funcionario = request.POST.get('is_superuser')
         if tipo_funcionario:
@@ -23,11 +17,8 @@ def criar_usuario(request):
         else:
             form = CadastroFuncionarioForm(request.POST or None)
         if form.is_valid():
-            print('to aqui')
             form.save()
             messages.success(request, 'Usuário cadastrado com sucesso!')
-            # my_group = Group.objects.get(id=request.POST.get('groups'))
-            # my_group.user_set.add(user)
             return redirect('index_usuarios')
     context = {
         'form':form,
@@ -37,9 +28,6 @@ def criar_usuario(request):
 
 @login_required(login_url='login')
 def editar_usuario(request, pk):
-    # if request.user.check_permission('accounts.change_usuario'):
-    #     messages.info(request, 'Você não tem permissão!')
-    #     return redirect('index')
     if not request.user.is_superuser:
         messages.info(request, 'Você não tem permissão para acessar esta tela.')
         return redirect('index')
@@ -56,8 +44,6 @@ def editar_usuario(request, pk):
                 return redirect('index_usuarios')
         context = {
             'edit':True,
-            'groups':Group.objects.all(),
-            'group_user':usuario.groups.all().first(),
             'usuario':usuario
         }
         return render(request, 'usuarios/form.html', context)
@@ -67,9 +53,6 @@ def editar_usuario(request, pk):
 
 @login_required(login_url='login')
 def editar_senha(request, pk):
-    # if request.user.check_permission('accounts.change_usuario'):
-    #     messages.info(request, 'Você não tem permissão!')
-    #     return redirect('index')
     if not request.user.is_superuser:
         messages.info(request, 'Você não tem permissão para acessar esta tela.')
         return redirect('index')
@@ -93,9 +76,6 @@ def editar_senha(request, pk):
 
 @login_required(login_url='login')
 def deletar_usuario(request, pk):
-    # if request.user.check_permission('accounts.delete_usuario'):
-    #     messages.info(request, 'Você não tem permissão!')
-    #     return redirect('index')
     if not request.user.is_superuser:
         messages.info(request, 'Você não tem permissão para acessar esta tela.')
         return redirect('index')
@@ -111,9 +91,6 @@ def deletar_usuario(request, pk):
 
 @login_required(login_url='login')
 def index_usuarios(request):
-    # if request.user.check_permission('accounts.view_usuario'):
-    #     messages.info(request, 'Você não tem permissão!')
-    #     return redirect('index')
     if not request.user.is_superuser:
         messages.info(request, 'Você não tem permissão para acessar esta tela.')
         return redirect('index')
