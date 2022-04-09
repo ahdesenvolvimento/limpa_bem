@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório - Lista de atendimentos no mês</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Atendente</th>
+                <th>Serviço</th>
+                <th>Valor pago</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for atendimento in atendimentos %}
+                <tr>
+                    <td>{{atendimento.id}}</td>
+                    <td>{{atendimento.id_cliente.nome}}</td>
+                    <td>{{atendimento.id_funcionario.nome}}</td>
+                    <td>{{atendimento.id_servico.nome}}</td>
+                    <td>{{atendimento.valor_pago}}</td>
+                </tr>
+            {% endfor %}
+                
+        </tbody>
+    </table>
+</body>
+</html>

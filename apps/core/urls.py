@@ -18,4 +18,6 @@ urlpatterns = [
     path('atendimentos/editar/<int:pk>', editar_atendimento, name="editar_atendimento"),
     path('atendimentos/deletar/<int:pk>', deletar_atendimento, name="deletar_atendimento"),
 
+    path('relatorios/', gerar_relatorios, name="gerar_relatorios"),
+
 ]

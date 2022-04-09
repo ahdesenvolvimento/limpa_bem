@@ -1,10 +1,20 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, permission_required
+from django.db.models import Count
 from django.contrib import messages
 
 from apps.core.models import Atendimento, Cliente, Servico
 from apps.usuarios.models import Atendente
 from .forms import AtendimentoForm, ClienteForm, ServicoForm
+
+from django.core.files.storage import FileSystemStorage
+from django.template.loader import render_to_string
+from weasyprint import HTML
+
+from datetime import datetime
+
+import os
 
 # Create your views here.
 @login_required(login_url='login')
@@ -176,3 +186,106 @@ def deletar_atendimento(request, pk):
     except Atendimento.DoesNotExist:
         messages.error(request, 'Atendimento não cadastrado.')
     return redirect('index_atendimentos')
+
+@login_required(login_url='login')
+def gerar_relatorios(request):
+    if request.method == 'POST':
+        tipo_relatorio = request.POST.get('relatorio')
+        if tipo_relatorio == '1':
+            html_string = render_to_string(
+                'core/relatorios/lista_atendimentos_dia.html', 
+                {
+                    'atendimentos': Atendimento.objects.filter(criado__contains=datetime.today().strftime('%Y-%m-%d')), 
+                }
+            )
+            html = HTML(string=html_string, base_url=request.build_absolute_uri())
+            dir = 'apps/media/relatorios/'
+            check_dir(dir)
+
+            html.write_pdf(target='{}/lista_atendimentos_dia.pdf'.format(dir), presentational_hints=True)
+            fs = FileSystemStorage('apps/media/relatorios/')
+            with fs.open('lista_atendimentos_dia.pdf') as pdf:
+                response = HttpResponse(pdf, content_type='application/pdf')
+                response['Content-Disposition'] = 'inline: filename="relatorio.pdf"'
+            return response
+        elif tipo_relatorio == '2':
+            data_atual = datetime.today()
+            html_string = render_to_string(
+                'core/relatorios/lista_atendimentos_mes.html', 
+                {
+                    'atendimentos': Atendimento.objects.filter(criado__month=data_atual.month), 
+                }
+            )
+            html = HTML(string=html_string, base_url=request.build_absolute_uri())
+            dir = 'apps/media/relatorios/'
+            check_dir(dir)
+
+            html.write_pdf(target='{}/lista_atendimentos_mes.pdf'.format(dir), presentational_hints=True)
+            fs = FileSystemStorage('apps/media/relatorios/')
+            with fs.open('lista_atendimentos_mes.pdf') as pdf:
+                response = HttpResponse(pdf, content_type='application/pdf')
+                response['Content-Disposition'] = 'inline: filename="relatorio.pdf"'
+            return response
+
+        elif tipo_relatorio == '3':
+            data_atual = datetime.today()
+            html_string = render_to_string(
+                'core/relatorios/qnt_atendimentos_funcionarios.html', 
+                {
+                    'atendimentos': Atendimento.objects.filter(criado__month=data_atual.month).values('id_funcionario', 'id_funcionario__nome').annotate(dcount=Count('id_funcionario')).order_by()
+                }
+            )
+            html = HTML(string=html_string, base_url=request.build_absolute_uri())
+            dir = 'apps/media/relatorios/'
+            check_dir(dir)
+
+            html.write_pdf(target='{}/qnt_atendimentos_funcionarios.pdf'.format(dir), presentational_hints=True)
+            fs = FileSystemStorage('apps/media/relatorios/')
+            with fs.open('qnt_atendimentos_funcionarios.pdf') as pdf:
+                response = HttpResponse(pdf, content_type='application/pdf')
+                response['Content-Disposition'] = 'inline: filename="relatorio.pdf"'
+            return response
+        elif tipo_relatorio == '4':
+            data_atual = datetime.today()
+            html_string = render_to_string(
+                'core/relatorios/qnt_clientes_mes.html', 
+                {
+                    'clientes': Cliente.objects.filter(criado__month=data_atual.month) 
+                }
+            )
+            html = HTML(string=html_string, base_url=request.build_absolute_uri())
+            dir = 'apps/media/relatorios/'
+            check_dir(dir)
+
+            html.write_pdf(target='{}/qnt_clientes_mes.pdf'.format(dir), presentational_hints=True)
+            fs = FileSystemStorage('apps/media/relatorios/')
+            with fs.open('qnt_clientes_mes.pdf') as pdf:
+                response = HttpResponse(pdf, content_type='application/pdf')
+                response['Content-Disposition'] = 'inline: filename="relatorio.pdf"'
+            return response
+        elif tipo_relatorio == '5':
+            
+            data_atual = datetime.today()
+            html_string = render_to_string(
+                'core/relatorios/lista_clientes_fieis.html', 
+                {
+                    'atendimentos': Atendimento.objects.filter(criado__month=data_atual.month).values('id_cliente', 'id_cliente__nome').annotate(dcount=Count('id_cliente')).order_by()
+                }
+            )
+            html = HTML(string=html_string, base_url=request.build_absolute_uri())
+            dir = 'apps/media/relatorios/'
+            check_dir(dir)
+
+            html.write_pdf(target='{}/lista_clientes_fieis.pdf'.format(dir), presentational_hints=True)
+            fs = FileSystemStorage('apps/media/relatorios/')
+            with fs.open('lista_clientes_fieis.pdf') as pdf:
+                response = HttpResponse(pdf, content_type='application/pdf')
+                response['Content-Disposition'] = 'inline: filename="relatorio.pdf"'
+            return response
+
+    return render(request, 'core/relatorios/form.html')
+
+
+def check_dir(dir):
+    if not os.path.isdir(dir):
+        os.makedirs(dir)

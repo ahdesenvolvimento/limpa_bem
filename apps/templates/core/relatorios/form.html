@@ -1,0 +1,37 @@
+{% extends 'layouts/base.html' %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-12">
+            {% include 'includes/messages.html' %}
+        </div>
+        <div class="col-12 d-flex justify-content-between">
+            <h5>Relatórios</h5>
+        </div>
+        <div class="col-12 mb-3">
+            <div class="dropdown-divider"></div>
+        </div>
+        <div class="col-12">
+            <form method="POST" action="" novalidate class="needs-validations">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="form-floating mb-3">
+                        <select name="relatorio" id="relatorio" class="form-control" required>
+                            <option value="0">Selecione o relatório</option>
+                            <option value="1">Lista de atendimentos no dia</option>
+                            <option value="2">Lista de atendimentos no mês</option>
+                            <option value="3">Quantidade de atendimentos por funcionário</option>
+                            <option value="4">Quantidade de novos clientes no mês</option>
+                            <option value="5">Lista de clientes fiéis</option>
+                        </select>
+                        <label for="relatorio">Relatórios</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Gerar relatório</button>
+            </form>
+        </div>
+    </div>
+    
+    {% include 'includes/scripts.html' %}
+{% endblock main %}
+    

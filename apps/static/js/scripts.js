@@ -74,7 +74,7 @@ document.ready = function(){
     })
     let valor_input = $("input[name=valor_pago]").val().replace(',', '');
     $("#desconto").change(function(){
-        if ($(this).val() == 'on'){
+        if ($(this).val() == 'true'){
             $("input[name=valor_pago]").val((valor_input - (valor_input * 0.1)).toFixed(2))
         }else{
             $('input[name=valor_pago]').val($('option:selected', this).attr('data-value'))
