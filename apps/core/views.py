@@ -300,22 +300,3 @@ def relatorio_pdf(request, dir_template, dados, dir_relatorios, nome_pdf):
 def check_dir(dir):
     if not os.path.isdir(dir):
         os.makedirs(dir)
-
-
-
-# html_string = render_to_string(
-#                 'core/relatorios/qnt_atendimentos_funcionarios.html', 
-#                 {
-#                     'atendimentos': Atendimento.objects.filter(criado__month=data_atual.month).values('id_funcionario', 'id_funcionario__nome').annotate(dcount=Count('id_funcionario')).order_by()
-#                 }
-#             )
-#             html = HTML(string=html_string, base_url=request.build_absolute_uri())
-#             dir = 'apps/media/relatorios/'
-#             check_dir(dir)
-
-#             html.write_pdf(target='{}/qnt_atendimentos_funcionarios.pdf'.format(dir), presentational_hints=True)
-#             fs = FileSystemStorage('apps/media/relatorios/')
-#             with fs.open('qnt_atendimentos_funcionarios.pdf') as pdf:
-#                 response = HttpResponse(pdf, content_type='application/pdf')
-#                 response['Content-Disposition'] = 'inline: filename="relatorio.pdf"'
-#             return response
