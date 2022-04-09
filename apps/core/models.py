@@ -25,11 +25,11 @@ class Servico(Base):
 
 class Endereco(Base):
     logradouro = models.CharField(max_length=255)
-    numero = models.IntegerField(null=True, blank=True)
+    numero = models.IntegerField(null=True, blank=True, default='')
     cep = models.CharField(max_length=11)
     localidade = models.CharField(max_length=255)
     bairro = models.CharField(max_length=255)
-    complemento = models.CharField(max_length=255, null=True, blank=True)
+    complemento = models.CharField(max_length=255, null=True, blank=True, default='')
     uf = models.CharField(max_length=255, null=True, blank=False)
     class Meta:
         db_table = 'endereco'

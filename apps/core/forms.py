@@ -1,16 +1,16 @@
-from django.forms import ModelForm
+from django import forms
 from .models import Atendimento, Cliente, Servico
-class ServicoForm(ModelForm):
+class ServicoForm(forms.ModelForm):
     class Meta:
         model = Servico
         fields = '__all__'
 
-class ClienteForm(ModelForm):
+class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
         fields = '__all__'
 
-class AtendimentoForm(ModelForm):
+class AtendimentoForm(forms.ModelForm):
     class Meta:
         model = Atendimento
         fields = '__all__'

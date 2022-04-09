@@ -1,0 +1,36 @@
+{% extends 'layouts/base.html' %}
+
+{% block main %}
+<div class="row">
+    <div class="col-12 d-flex justify-content-between">
+        <h5>Alterar senha</h5>
+        <a href="#" class="nav-link" title="Voltar para a página anterior" onclick="voltar()">
+            <i class="cil-arrow-circle-left"></i>
+            Voltar</a>
+    </div>
+    <div class="col-12 mb-3">
+        <div class="dropdown-divider"></div>
+    </div>
+    <div class="col-12">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="form-floating mb-3">
+                            <input required type="password" name="password" id="password" maxlength="255"
+                                class="form-control" placeholder="Senha" value="{{usuario.password}}">
+                            <label for="password">Insira a nova senha para o usuário</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% include 'includes/scripts.html' %}
+{% endblock main %}

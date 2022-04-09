@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, permission_required
-from django.db.models import Count
+from django.db.models import Count, Sum
 from django.contrib import messages
 
 from apps.core.models import Atendimento, Cliente, Servico
@@ -17,10 +17,27 @@ from datetime import datetime
 import os
 
 # Create your views here.
-@login_required(login_url='login')
+
 def index(request):
     print(request.user.is_superuser)
+    if request.user.is_authenticated:
+        return redirect('dashboard')
     return render(request, 'index.html')
+
+@login_required(login_url='login')
+def dashboard(request):
+    data_atual = datetime.today()
+    print(Atendimento.objects.filter(criado__month=data_atual.month).aggregate(Sum('valor_pago')))
+    total = 0
+    for i in Atendimento.objects.filter(criado__month=data_atual.month):
+        print(i.valor_pago.replace(',',''))
+        total += float(i.valor_pago.replace(',',''))
+    print(total)
+    context = {
+        'qnt_cliente':Cliente.objects.filter(criado__month=data_atual.month),
+        'total_faturado':total#Atendimento.objects.filter(criado__month=data_atual.month).aggregate(Sum('valor_pago'))
+    }
+    return render(request, 'core/dashboard.html', context)
 
 @login_required(login_url='login')
 def index_servicos(request):
@@ -124,6 +141,7 @@ def deletar_cliente(request, pk):
     try:
         cliente = Cliente.objects.get(id=pk)
         cliente.delete()
+        messages.success(request, 'Cliente deletado com sucesso.')
     except Cliente.DoesNotExist:
         messages.error(request, 'Cliente não cadastrado.')
     return redirect('index_clientes')
@@ -183,6 +201,7 @@ def deletar_atendimento(request, pk):
     try:
         atendimento = Atendimento.objects.get(id=pk)
         atendimento.delete()
+        messages.success(request, 'Atendimento deletado com sucesso.')
     except Atendimento.DoesNotExist:
         messages.error(request, 'Atendimento não cadastrado.')
     return redirect('index_atendimentos')

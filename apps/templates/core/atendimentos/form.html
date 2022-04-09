@@ -12,26 +12,25 @@
             <div class="dropdown-divider"></div>
         </div>
         <div class="col-12">
-            <form action="" method="POST">
+            <form action="" method="POST" class="needs-validation" novalidate>
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <div class="form-floating">
-                                <input type="text" required name="valor_pago" id="valor_pago" maxlength="255" class="form-control" placeholder="Valor pago" value="{{atendimento.valor_pago}}">
-                                <label for="valor_pago">Valor pago</label>
-                            </div>
-                            <div class="form-group mb-3">
-                                <input type="checkbox" name="desconto" id="desconto" value="true"> 
-                                <label for="desconto">Conceder desconto de 10%</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
                             <div class="form-floating mb-3">
-                                <input type="date" required name="data_limpeza" id="data_limpeza" maxlength="255" class="form-control" placeholder="Data limpeza" value="{{atendimento.data_limpeza|date:'Y-m-d'}}">
-                                <label for="data_limpeza">Data da limpeza</label>
+                                <select name="id_servico" required id="id_servico" class="form-control">
+                                    <option value="">Selecione o serviço</option>
+                                    {% for servico in servicos %}
+                                        {% if servico.id == atendimento.id_servico.id %}
+                                            <option value="{{servico.id}}" data-value="{{servico.valor}}" selected="selected">{{servico.nome}} / R$ {{servico.valor}}</option>
+                                        {% else %}
+                                            <option value="{{servico.id}}" data-value="{{servico.valor}}">{{servico.nome}} / R$ {{servico.valor}}</option>
+                                        {% endif %}
+                                       
+                                    {% endfor %}
+                                </select>
+                                <label for="id_servico">Serviço</label>
+                                <span class="invalid-feedback">Selecione o serviço</span>
                             </div>
                         </div>
                     </div>
@@ -49,27 +48,11 @@
                                     {% endfor %}
                                 </select>
                                 <label for="id_funcionario">Atendente</label>
+                                <span class="invalid-feedback">Selecione o atendente</span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="form-floating mb-3">
-                                <select name="id_servico" required id="id_servico" class="form-control">
-                                    <option value="">Selecione o serviço</option>
-                                    {% for servico in servicos %}
-                                        {% if servico.id == atendimento.id_servico.id %}
-                                            <option value="{{servico.id}}" data-value="{{servico.valor}}" selected="selected">{{servico.nome}} / R$ {{servico.valor}}</option>
-                                        {% else %}
-                                            <option value="{{servico.id}}" data-value="{{servico.valor}}">{{servico.nome}} / R$ {{servico.valor}}</option>
-                                        {% endif %}
-                                       
-                                    {% endfor %}
-                                </select>
-                                <label for="id_servico">Serviço</label>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <div class="col-md-12">
                         <div class="form-group">
                             <div class="form-floating mb-3">
@@ -85,6 +68,29 @@
                                     {% endfor %}
                                 </select>
                                 <label for="id_cliente">Cliente</label>
+                                <span class="invalid-feedback">Selecione o cliente</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-floating">
+                                <input type="text" required name="valor_pago" id="valor_pago" maxlength="255" class="form-control" placeholder="Valor pago" value="{{atendimento.valor_pago}}">
+                                <label for="valor_pago">Valor pago</label>
+                                <span class="invalid-feedback">Insira o valor pago pelo cliente</span>
+                            </div>
+                            <div class="form-group mb-3">
+                                <input type="checkbox" name="desconto" id="desconto" value="true"> 
+                                <label for="desconto">Conceder desconto de 10%</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-floating mb-3">
+                                <input type="date" required name="data_limpeza" id="data_limpeza" maxlength="255" class="form-control" placeholder="Data limpeza" value="{{atendimento.data_limpeza|date:'Y-m-d'}}">
+                                <label for="data_limpeza">Data da limpeza</label>
+                                <span class="invalid-feedback">Informe a data da limpeza</span>
                             </div>
                         </div>
                     </div>
@@ -93,11 +99,28 @@
                             <div class="form-floating mb-3">
                                 <select name="situacao" id="situacao" class="form-control">
                                     <option value="">Selecione a situação</option>
+                                    
+                                    {% if atendimento.situacao == '1' %}
                                     <option value="1" selected>Pendente</option>
                                     <option value="2">Realizado</option>
                                     <option value="3">Cancelado</option>
+                                    {% elif atendimento.situacao == '2' %}
+                                    <option value="1">Pendente</option>
+                                    <option value="2" selected>Realizado</option>
+                                    <option value="3">Cancelado</option>
+                                    {% elif atendimento.situacao == '3' %}
+                                    <option value="1">Pendente</option>
+                                    <option value="2">Realizado</option>
+                                    <option value="3"selected>Cancelado</option>
+                                    {% else %}
+                                    <option value="1" selected>Pendente</option>
+                                    <option value="2">Realizado</option>
+                                    <option value="3">Cancelado</option>
+                                    {% endif %}
+                                        
                                 </select>
                                 <label for="situacao">Situação</label>
+                                <span class="invalid-feedback">Selecione a situação do serviço</span>
                             </div>
                         </div>
                     </div>

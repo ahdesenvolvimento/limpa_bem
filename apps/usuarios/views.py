@@ -4,8 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Permission, Group
 from django.contrib import messages
 
-from apps.usuarios.forms import CadastroFuncionarioForm, CadastroGerenteForm
-from apps.usuarios.models import Gerente, Usuario
+from apps.usuarios.forms import AtualizaAtendenteForm, AtualizaGerenteForm, AtualizaSenha, CadastroFuncionarioForm, CadastroGerenteForm
+from apps.usuarios.models import Gerente, Pessoa, Usuario
 
 # Create your views here.
 @login_required(login_url='login')
@@ -18,20 +18,17 @@ def criar_usuario(request):
     #     return redirect('listar_usuarios')
     if str(request.method == 'POST'):
         tipo_funcionario = request.POST.get('is_superuser')
-        print(tipo_funcionario)
         if tipo_funcionario:
             form = CadastroGerenteForm(request.POST or None)
         else:
-            print('to aqui')
             form = CadastroFuncionarioForm(request.POST or None)
-        print(form.errors)
         if form.is_valid():
             print('to aqui')
             form.save()
             messages.success(request, 'Usuário cadastrado com sucesso!')
             # my_group = Group.objects.get(id=request.POST.get('groups'))
             # my_group.user_set.add(user)
-            return redirect('index')
+            return redirect('index_usuarios')
     context = {
         'form':form,
         'groups':Group.objects.all()
@@ -47,26 +44,26 @@ def editar_usuario(request, pk):
         messages.info(request, 'Você não tem permissão para acessar esta tela.')
         return redirect('index')
     try:
-        usuario = Usuario.objects.get(id=pk)
-        # usuario = Gerente.objects.get(id=pk) if usuario.is_superuser else Aten.objects.get(id=pk)
+        usuario = Pessoa.objects.get(id=pk)
         if str(request.method == 'POST'): 
-            form = AtualizaCadastro(request.POST or None, instance=usuario)
+            if usuario.is_superuser:
+                form = AtualizaGerenteForm(request.POST or None, instance=usuario)
+            else:
+                form = AtualizaAtendenteForm(request.POST or None, instance=usuario)
             if form.is_valid():
                 form.save()
                 messages.success(request, "Usuário atualizado com sucesso!")
-                return redirect('list_users')
-        else:
-            form = AtualizaCadastro(instance=usuario)
+                return redirect('index_usuarios')
         context = {
-            'form':form,
             'edit':True,
             'groups':Group.objects.all(),
             'group_user':usuario.groups.all().first(),
+            'usuario':usuario
         }
-        return render(request, 'accounts/user/form_user.html', context)
+        return render(request, 'usuarios/form.html', context)
     except Usuario.DoesNotExist:
         messages.error(request, 'Este usuário não está cadastrado no sistema.')
-        return redirect('list_users')
+        return redirect('index_usuarios')
 
 @login_required(login_url='login')
 def editar_senha(request, pk):
@@ -83,16 +80,16 @@ def editar_senha(request, pk):
             if form.is_valid():
                 form.save()
                 messages.success(request, "Senha alterada com sucesso!")
-                return redirect('list_users')
+                return redirect('index_usuarios')
         else:
             form = AtualizaSenha(instance=usuario)
         context = {
             'form':form
         }
-        return render(request, 'accounts/user/edit_password.html', context)
+        return render(request, 'usuarios/form_senha.html', context)
     except Usuario.DoesNotExist:
         messages.error(request, 'Este usuário não está cadastrado no sistema.')
-        return redirect('list_users')
+        return redirect('index_usuarios')
 
 @login_required(login_url='login')
 def deletar_usuario(request, pk):
@@ -121,6 +118,6 @@ def index_usuarios(request):
         messages.info(request, 'Você não tem permissão para acessar esta tela.')
         return redirect('index')
     context = {
-        'usuarios':Usuario.objects.all()
+        'funcionarios':Pessoa.objects.all()
     }
     return render(request, 'usuarios/index.html', context)

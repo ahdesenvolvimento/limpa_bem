@@ -6,8 +6,8 @@
             {% include 'includes/messages.html' %}
         </div>
         <div class="col-12 d-flex justify-content-between">
-            <h5>Serviços</h5>
-            <a class="btn btn-primary" title="Novo serviço" href="{% url 'criar_clientes' %}"><i class="cil-plus icon-align"></i> Novo cliente</a>
+            <h5>Clientes</h5>
+            <a class="btn btn-primary" title="Novo cliente" href="{% url 'criar_clientes' %}"><i class="cil-plus icon-align"></i> Novo cliente</a>
         </div>
         <div class="col-12 mb-3">
             <div class="dropdown-divider"></div>
@@ -31,8 +31,8 @@
                             <td>{{cliente.telefone}}</td>
                             <td>{{cliente.cpf}}</td>
                             <td >
-                                <a class="btn btn-primary" title="Editar serviço" href="{% url 'editar_cliente' cliente.id %}"><i class="cil-pen icon-align">Editar</i></a>
-                                <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalDelete{{cliente.id}}" title="Deletar serviço" href="{% url 'deletar_cliente' cliente.id %}"><i class="cil-trash icon-align">Deletar</i></button>
+                                <a class="btn btn-primary" title="Editar cliente" href="{% url 'editar_cliente' cliente.id %}"><i class="cil-pen icon-align">Editar</i></a>
+                                <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalDelete{{cliente.id}}" title="Deletar cliente"><i class="cil-trash icon-align">Deletar</i></button>
                             </td>
                         </tr>
                         <div class="modal fade text-white fw-bold" id="modalDelete{{cliente.id}}" aria-hidden="true" aria-labelledby="modalDelete" tabindex="-1">

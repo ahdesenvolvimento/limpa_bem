@@ -71,13 +71,16 @@ function pesquisacep(valor) {
 document.ready = function(){
     $("#id_servico").change(function(){
         $('input[name=valor_pago]').val($('option:selected', this).attr('data-value'))
+        $('input[name=valor_pago]').attr('data-value-input', $('option:selected', this).attr('data-value'))
     })
     let valor_input = $("input[name=valor_pago]").val().replace(',', '');
+    
     $("#desconto").change(function(){
-        if ($(this).val() == 'true'){
+        if ($(this).is(':checked')){
             $("input[name=valor_pago]").val((valor_input - (valor_input * 0.1)).toFixed(2))
         }else{
-            $('input[name=valor_pago]').val($('option:selected', this).attr('data-value'))
+            alert($('input[name=valor_pago]').attr('data-value-input'))
+            $('input[name=valor_pago]').val($('input[name=valor_pago]').attr('data-value-input'))
         }
     })
 }

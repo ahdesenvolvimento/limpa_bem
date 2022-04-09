@@ -51,7 +51,11 @@
                     </div>
                     <div class="col-md-12 mb-2">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" checked id="status" name="status">
+                            <input class="form-check-input" type="checkbox" 
+                            {% if servico.status %}
+                                checked
+                            {% endif %}
+                                 id="status" name="status">
                             <label class="form-check-label" for="flexCheckDefault">
                               Ativo?
                             </label>

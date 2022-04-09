@@ -27,3 +27,27 @@ class CadastroFuncionarioForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+class AtualizaGerenteForm(forms.ModelForm):
+    class Meta:
+        model = Gerente
+        fields = ('nome', 'logradouro', 'cep', 'localidade', 'bairro', 'complemento', 'telefone', 'cpf', 'numero', 'email', 'username', 'is_superuser')
+
+
+class AtualizaAtendenteForm(forms.ModelForm):
+    class Meta:
+        model = Atendente
+        fields = ('nome', 'logradouro', 'cep', 'localidade', 'bairro', 'complemento', 'telefone', 'cpf', 'numero', 'email', 'username', 'is_superuser')
+
+class AtualizaSenha(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = ['password']
+
+    def save(self, commit=True):
+        user = super(AtualizaSenha, self).save(commit=False)
+        user.set_password(self.cleaned_data['password'])
+        if commit:
+            user.save()
+        return user
+    

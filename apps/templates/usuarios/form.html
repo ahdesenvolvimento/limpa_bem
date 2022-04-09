@@ -1,122 +1,187 @@
 {% extends 'layouts/base.html' %}
 
 {% block main %}
-    <div class="row">
-        <div class="col-12">
-            <form action="" method="POST">
-                {% csrf_token %}
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="form-floating mb-3">
-                                <input type="text" name="nome" id="nome" maxlength="255" class="form-control" placeholder="Nome" value="{{usuario.nome}}">
-                                <label for="nome">Nome do serviço</label>
-                            </div>
+<div class="row">
+    <div class="col-12 d-flex justify-content-between">
+        <h5>{% if edit %}Editar funcionário{% else %}Cadastro de funcionários{% endif %}</h5>
+        <a href="#" class="nav-link" title="Voltar para a página anterior" onclick="voltar()">
+            <i class="cil-arrow-circle-left"></i>
+            Voltar</a>
+    </div>
+    <div class="col-12 mb-3">
+        <div class="dropdown-divider"></div>
+    </div>
+    <div class="col-12">
+        <form action="" method="POST" class="needs-validation" novalidate>
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="form-floating mb-3">
+                            <input required type="text" name="nome" id="nome" maxlength="255" class="form-control"
+                                placeholder="Nome" value="{{usuario.nome}}">
+                            <label for="nome">Nome do funcionário</label>
+                            <span class="invalid-feedback">Informe o nome do funcionário</span>
                         </div>
-                    </div>
-
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="form-floating mb-3">
-                                <input type="text" name="logradouro" id="logradouro" maxlength="255" class="form-control" placeholder="Logradouro" value="{{usuario.logradouro}}">
-                                <label for="logradouro">Endereço</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="form-floating mb-3">
-                                <input type="text" name="numero" id="numero" maxlength="255" class="form-control" placeholder="Numero" value="{{usuario.numero}}">
-                                <label for="numero">Numero</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="form-floating mb-3">
-                                <input type="text" name="cep" id="cep" maxlength="255" class="form-control" placeholder="CEP" value="{{usuario.cep}}">
-                                <label for="cep">CEP</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="form-floating mb-3">
-                                <input type="text" name="localidade" id="localidade" maxlength="255" class="form-control" placeholder="Localidade" value="{{usuario.localidade}}">
-                                <label for="localidade">Localidade</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="form-floating mb-3">
-                                <input type="text" name="bairro" id="bairro" maxlength="255" class="form-control" placeholder="Bairro" value="{{usuario.bairro}}">
-                                <label for="bairro">Bairro</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="form-floating mb-3">
-                                <input type="text" name="complemento" id="complemento" maxlength="255" class="form-control" placeholder="Complemento" value="{{usuario.complemento}}">
-                                <label for="complemento">Complemento</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="form-floating mb-3">
-                                <input type="text" name="telefone" id="telefone" maxlength="255" class="form-control" placeholder="Telefone" value="{{usuario.telefone}}">
-                                <label for="telefone">Telefone</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="form-floating mb-3">
-                                <input type="text" name="cpf" id="cpf" maxlength="255" class="form-control" placeholder="CPF" value="{{usuario.cpf}}">
-                                <label for="cpf">CPF</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" checked value="true" id="is_superuser" name="is_superuser">
-                            <label class="form-check-label" for="is_superuser">
-                              Gerente?
-                            </label>
-                          </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="form-floating mb-3">
-                                <input type="email" name="email" id="email" maxlength="255" class="form-control" placeholder="E-mail" value="{{usuario.email}}">
-                                <label for="email">E-mail</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="form-floating mb-3">
-                                <input type="text" name="username" id="username" maxlength="255" class="form-control" placeholder="Usuário" value="{{usuario.username}}">
-                                <label for="username">Usuário</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <div class="form-floating mb-3">
-                                <input type="password" name="password" id="password" maxlength="255" class="form-control" placeholder="Senha" value="{{usuario.password}}">
-                                <label for="password">Senha</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <button type="submit" class="btn btn-primary">Salvar</button>
                     </div>
                 </div>
-            </form>
-        </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <div class="form-floating mb-3">
+                            <input required type="text" name="cep" id="cep" maxlength="255" class="form-control cep"
+                                placeholder="CEP" onblur="pesquisacep(this.value)" value="{{usuario.cep}}">
+                            <label for="cep">CEP</label>
+                            <span class="invalid-feedback">Informe o CEP</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="form-floating mb-3">
+                            <input required type="text" name="logradouro" id="logradouro" maxlength="255"
+                                class="form-control" placeholder="Logradouro" value="{{usuario.logradouro}}">
+                            <label for="logradouro">Endereço</label>
+                            <span class="invalid-feedback">Informe o endereço</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <div class="form-floating mb-3">
+                            <input type="text" name="numero" id="numero" maxlength="255" class="form-control"
+                                placeholder="Numero" value="{{usuario.numero}}">
+                            <label for="numero">Numero</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="form-floating mb-3">
+                            <input type="text" name="complemento" id="complemento" maxlength="255" class="form-control"
+                                placeholder="Complemento" value="{{usuario.complemento}}">
+                            <label for="complemento">Complemento</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <div class="form-floating mb-3">
+                            <input required type="text" name="localidade" id="localidade" maxlength="255"
+                                class="form-control" placeholder="Localidade" value="{{usuario.localidade}}">
+                            <label for="localidade">Localidade</label>
+                            <span class="invalid-feedback">Informe a localidade</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <div class="form-floating mb-3">
+                            <input required type="text" name="bairro" id="bairro" maxlength="255" class="form-control"
+                                placeholder="Bairro" value="{{usuario.bairro}}">
+                            <label for="bairro">Bairro</label>
+                            <span class="invalid-feedback">Informe o bairro</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <div class="form-floating mb-3">
+                            <input type="text" name="uf" id="uf" maxlength="255" class="form-control"
+                                placeholder="Estado" value="{{usuario.uf}}">
+                            <label for="uf">Estado</label>
+                            <span class="invalid-feedback">Informe o estado</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="form-floating mb-3">
+                            <input required type="text" name="telefone" id="telefone" maxlength="255"
+                                class="form-control telefone" placeholder="Telefone" value="{{usuario.telefone}}">
+                            <label for="telefone">Telefone</label>
+                            <span class="invalid-feedback">Informe o telefone</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="form-floating mb-3">
+                            <input required type="text" name="cpf" id="cpf" maxlength="255" class="form-control cpf"
+                                placeholder="CPF" value="{{usuario.cpf}}">
+                            <label for="cpf">CPF</label>
+                            <span class="invalid-feedback">Informe o CPF</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" checked value="true" id="is_superuser"
+                            name="is_superuser">
+                        <label class="form-check-label" for="is_superuser">
+                            Gerente?
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="form-floating mb-3">
+                            <input required type="email" name="email" id="email" maxlength="255"
+                                class="form-control email" placeholder="E-mail" value="{{usuario.email}}">
+                            <label for="email">E-mail</label>
+                            <span class="invalid-feedback">Informe o e-mail</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="form-floating mb-3">
+                            <input required type="text" name="username" id="username" maxlength="255"
+                                class="form-control" placeholder="Usuário" value="{{usuario.username}}">
+                            <label for="username">Usuário</label>
+                            <span class="invalid-feedback">Informe o usuário</span>
+                        </div>
+                    </div>
+                </div>
+
+                {% if not edit %}
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="form-floating mb-3">
+                            <input required type="password" name="password" id="password" maxlength="255"
+                                class="form-control" placeholder="Senha" value="{{usuario.password}}">
+                            <label for="password">Senha</label>
+                            <span class="invalid-feedback">Informe a senha</span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </form>
     </div>
+</div>
+{% include 'includes/scripts.html' %}
+<script>
+    $(".cpf").inputmask('999.999.999-99');
+    $(".telefone").inputmask('(99) 9 9999-9999');
+    $(".cep").inputmask('99999-999');
+    $(".email").inputmask({
+        mask: "*{1,20}[.*{1,20}][.*{1,20}][.*{1,20}]@*{1,20}[.*{2,6}][.*{1,2}]",
+        greedy: false,
+        onBeforePaste: function (pastedValue, opts) {
+            pastedValue = pastedValue.toLowerCase();
+            return pastedValue.replace("mailto:", "");
+        },
+        definitions: {
+            '*': {
+                validator: "[0-9A-Za-z!#$%&'*+/=?^_`{|}~\-]",
+                casing: "lower"
+            }
+        }
+    });
+</script>
 {% endblock main %}
-    

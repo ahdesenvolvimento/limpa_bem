@@ -7,7 +7,7 @@
         </div>
         <div class="col-12 d-flex justify-content-between">
             <h5>Atendimentos</h5>
-            <a class="btn btn-primary" title="Novo serviço" href="{% url 'criar_atendimentos' %}"><i class="cil-plus icon-align"></i> Novo Atendimento</a>
+            <a class="btn btn-primary" title="Novo atendimento" href="{% url 'criar_atendimentos' %}"><i class="cil-plus icon-align"></i> Novo Atendimento</a>
         </div>
         <div class="col-12 mb-3">
             <div class="dropdown-divider"></div>
@@ -33,9 +33,9 @@
                                 {{atendimento.situacao}}
                             </td>
                             <td >
-                                <a class="btn btn-primary" title="Editar atendimento" href="{% url 'editar_atendimento' atendimento.id %}"><i class="cil-pen icon-align">Editar</i></a>
+                                <a class="btn btn-primary" title="Editar atendimento" href="{% url 'editar_atendimento' atendimento.id %}"><i class="cil-pen icon-align"></i>Editar</a>
                                 {% if request.user.is_superuser %}
-                                    <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalDelete{{atendimento.id}}" title="Deletar atendimento" href="{% url 'deletar_atendimento' atendimento.id %}"><i class="cil-trash icon-align">Deletar</i></button>
+                                    <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalDelete{{atendimento.id}}" title="Deletar atendimento" href="{% url 'deletar_atendimento' atendimento.id %}"><i class="cil-trash icon-align"></i>Deletar</button>
                                 {% endif %}
                             </td>
                         </tr>
