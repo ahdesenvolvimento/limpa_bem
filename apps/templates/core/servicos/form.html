@@ -1,74 +1,78 @@
 {% extends 'layouts/base.html' %}
 
 {% block main %}
-    <div class="row">
-        <div class="col-12 d-flex justify-content-between">
-            <h5>Cadastro de serviços</h5>
-            <a href="#" class="nav-link" title="Voltar para a página anterior" onclick="voltar()">
-                <i class="cil-arrow-circle-left"></i>
+<div class="row">
+    <div class="col-12 d-flex justify-content-between">
+        <h5>
+            {% if edit %}
+            Editar serviço
+            {% else %}
+            Cadastro de serviços
+            {% endif %}
+        </h5>
+        <a href="#" class="nav-link" title="Voltar para a página anterior" onclick="voltar()">
+            <i class="cil-arrow-circle-left"></i>
             Voltar</a>
-        </div>
-        <div class="col-12 mb-3">
-            <div class="dropdown-divider"></div>
-        </div>
-        <div class="col-12">
-            <form action="" method="POST" class="needs-validation" novalidate>
-                {% csrf_token %}
-                <div class="row">
-                    <div class="col-md-12 mb-2">
-                        <div class="form-group">
-                            <div class="form-floating mb-3">
-                                <input type="text" name="nome" id="nome" maxlength="255" required class="form-control" placeholder="Nome" value="{{servico.nome}}">
-                                <label for="nome">Nome do serviço</label>
-                                <div class="invalid-feedback">
-                                    Informe o nome do serviço.
-                                </div>
+    </div>
+    <div class="col-12 mb-3">
+        <div class="dropdown-divider"></div>
+    </div>
+    <div class="col-12">
+        <form action="" method="POST" class="needs-validation" novalidate>
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-12 mb-2">
+                    <div class="form-group">
+                        <div class="form-floating mb-3">
+                            <input type="text" name="nome" id="nome" maxlength="255" required class="form-control"
+                                placeholder="Nome" value="{{servico.nome}}">
+                            <label for="nome">Nome do serviço</label>
+                            <div class="invalid-feedback">
+                                Informe o nome do serviço.
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-12 mb-2">
-                        <div class="form-group">
-                            <div class="form-floating mb-3">
-                                <input type="text" name="descricao" id="descricao" required maxlength="255" class="form-control" placeholder="Descricao" value="{{servico.descricao}}">
-                                <label for="descricao">Descrição</label>
-                                <div class="invalid-feedback">
-                                    Informe uma descrição para o serviço.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12 mb-2">
-                        <div class="form-group">
-                            <div class="form-floating mb-3">
-                                <input type="text" name="valor" id="valor" maxlength="255" required class="form-control" placeholder="Valor" value="{{servico.valor}}">
-                                <label for="valor">Valor R$</label>
-                                <div class="invalid-feedback">
-                                    Informe o valor (R$) do serviço.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-2">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" 
-                            {% if servico.status %}
-                                checked
-                            {% endif %}
-                                 id="status" name="status">
-                            <label class="form-check-label" for="flexCheckDefault">
-                              Ativo?
-                            </label>
-                          </div>
-                    </div>
-                    <div class="col-md-12 mb-2">
-                        <button type="submit" class="btn btn-primary">Salvar</button>
                     </div>
                 </div>
-            </form>
-        </div>
-    </div>
-    {% include 'includes/scripts.html' %}
-{% endblock main %}
+                <div class="col-md-12 mb-2">
+                    <div class="form-group">
+                        <div class="form-floating mb-3">
+                            <input type="text" name="descricao" id="descricao" required maxlength="255"
+                                class="form-control" placeholder="Descricao" value="{{servico.descricao}}">
+                            <label for="descricao">Descrição</label>
+                            <div class="invalid-feedback">
+                                Informe uma descrição para o serviço.
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    
+                <div class="col-md-12 mb-2">
+                    <div class="form-group">
+                        <div class="form-floating mb-3">
+                            <input type="text" name="valor" id="valor" maxlength="255" required class="form-control"
+                                placeholder="Valor" value="{{servico.valor}}">
+                            <label for="valor">Valor R$</label>
+                            <div class="invalid-feedback">
+                                Informe o valor (R$) do serviço.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" {% if servico.status %} checked {% endif %}
+                            id="status" name="status">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Ativo?
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-2">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% include 'includes/scripts.html' %}
+{% endblock main %}

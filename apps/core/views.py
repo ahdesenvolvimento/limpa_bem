@@ -19,6 +19,7 @@ import os
 
 # Create your views here.
 
+@login_required(login_url='login')
 def index(request):
     if request.user.is_authenticated:
         return redirect('dashboard')
@@ -26,21 +27,10 @@ def index(request):
 
 @login_required(login_url='login')
 def dashboard(request):
-    data_atual = datetime.today() + relativedelta(days=+1)
-    print(data_atual)
-    six_months = data_atual.today() + relativedelta(days=-6)
-    print(data_atual)
-    print(six_months)
-    print(Atendimento.objects.get(id=6).criado)
-    print(Atendimento.objects.filter(criado__range=[six_months, data_atual.strftime('%Y-%m-%d')]).values('criado__month').annotate(contador=Count('criado')))
-    # sampledate__gte=datetime.date(2011, 1, 1),
-    #                             sampledate__lte=datetime.date(2011, 1, 31)
-    # print(Atendimento.objects.filter(criado__month=data_atual.month).aggregate(Sum('valor_pago')))
+    data_atual = datetime.today()
     total = 0
     for i in Atendimento.objects.filter(criado__month=data_atual.month):
-        print(i.valor_pago.replace(',',''))
         total += float(i.valor_pago.replace(',',''))
-    print(total)
     context = {
         'qnt_cliente':Cliente.objects.filter(criado__month=data_atual.month),
         'total_faturado':total#Atendimento.objects.filter(criado__month=data_atual.month).aggregate(Sum('valor_pago'))
@@ -86,7 +76,8 @@ def editar_servico(request, pk):
                 messages.success(request, 'Serviço editado com sucesso.')
                 return redirect('index_servicos')
         context = {
-            'servico':servico
+            'servico':servico,
+            'edit':True
         }
         return render(request, 'core/servicos/form.html', context)
     except Servico.DoesNotExist:
@@ -136,7 +127,8 @@ def editar_cliente(request, pk):
                 messages.success(request, 'Cliente editado com sucesso.')
                 return redirect('index_clientes')
         context = {
-            'cliente':cliente
+            'cliente':cliente,
+            'edit':True
         }
         return render(request, 'core/clientes/form.html', context)
     except Servico.DoesNotExist:
@@ -192,7 +184,8 @@ def editar_atendimento(request, pk):
             'atendimento':atendimento,
             'atendentes':Atendente.objects.all(),
             'servicos':Servico.objects.filter(status=True),
-            'clientes':Cliente.objects.all()
+            'clientes':Cliente.objects.all(),
+            'edit':True
         }
         return render(request, 'core/atendimentos/form.html', context)
     except Servico.DoesNotExist:

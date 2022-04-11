@@ -149,7 +149,7 @@ CSRF_COOKIE_HTTPONLY = True
 X_FRAME_OPTIONS = 'DENY'
 SECURE_HSTS_PRELOAD = True
 SECURE_SSL_REDIRECT = False
-
+SESSION_COOKIE_HTTPONLY = True
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

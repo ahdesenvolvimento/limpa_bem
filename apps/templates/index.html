@@ -1,8 +1,21 @@
 {% extends 'layouts/base.html' %}
 
 {% block main %}
-<h1>Ola</h1>
-<canvas id="myChart" width="400" height="100"></canvas>
+<div class="row">
+    <div class="col-12">
+        {% include 'includes/messages.html' %}
+    </div>
+    <div class="col-12 d-flex justify-content-between">
+        <h5>Clientes</h5>
+        <a class="btn btn-primary" title="Novo cliente" href="{% url 'criar_clientes' %}"><i class="cil-plus icon-align"></i> Novo cliente</a>
+    </div>
+    <div class="col-12 mb-3">
+        <div class="dropdown-divider"></div>
+    </div>
+    <div class="col-6">
+        <canvas id="myChart" width="400" height="100"></canvas>
+    </div>
+</div>
 {% include 'includes/scripts.html' %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
 <script>

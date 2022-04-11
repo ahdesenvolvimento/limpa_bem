@@ -38,3 +38,11 @@ footer {
 #main-card{
   min-height: 100%;
 }
+
+.lista-footer ul {
+  list-style: none;
+}
+
+.lista-footer ul li a{
+  color: white !important;
+}

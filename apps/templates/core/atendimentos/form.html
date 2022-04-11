@@ -3,7 +3,13 @@
 {% block main %}
     <div class="row">
         <div class="col-12 d-flex justify-content-between">
-            <h5>Cadastro de atendimentos</h5>
+            <h5> 
+            {% if edit %}
+                Editar atendimento
+            {% else %}
+                Cadastro de atendimentos
+            {% endif %}
+            </h5>
             <a href="#" class="nav-link" title="Voltar para a página anterior" onclick="voltar()">
                 <i class="cil-arrow-circle-left"></i>
             Voltar</a>
